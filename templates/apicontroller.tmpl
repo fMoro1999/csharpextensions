@@ -5,9 +5,193 @@ ${namespaces}namespace ${namespace};
 public class ${classname} : ControllerBase
 {
     private readonly ILogger<${classname}> _logger;
+    private readonly ${type}Service _${camelType}Service;
 
-    public ${classname}(ILogger<${classname}> logger)
+    public ${classname}(
+        ILogger<${classname}> logger,
+        ${type}Service ${camelType}Service
+    )
     {
         _logger = logger;
+        _${camelType}Service = ${camelType}Service;
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult Get${type}(
+        [FromRoute] string id
+    )
+    {
+        try
+        {
+            var ${camelType} = _${camelType}Service.Get${type}ById(
+                id
+            );
+
+            if (${camelType} is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(${camelType});
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                "{@methodName} - Error Message: {@message} - InnerException: {@innerEx} "
+                    + "- Stacktrace: {@ex}",
+                nameof(Get${type}),
+                ex.Message,
+                ex.InnerException,
+                ex.StackTrace
+            );
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+        }
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult Get${type}s()
+    {
+        try
+        {
+            IEnumerable<${type}> ${camelType}s =
+                 _${camelType}Service.Get${type}s();
+
+            if (${camelType}s is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(${camelType}s);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                "{@methodName} - Error Message: {@message} - InnerException: {@innerEx} "
+                    + "- Stacktrace: {@ex}",
+                nameof(Get${type}s),
+                ex.Message,
+                ex.InnerException,
+                ex.StackTrace
+            );
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+        }
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public IActionResult Update(
+        [FromRoute] string id,
+        [FromBody] ${type} updated${type}
+    )
+    {
+        try
+        {
+            if (id != updated${type}.Id)
+                return BadRequest();
+
+            ${type} documentToUpdate =
+                _${camelType}Service.Get${type}ById(id);
+
+            if (documentToUpdate is null)
+            {
+                return NotFound();
+            }
+
+            ${type} updated = _${camelType}Service.Update(
+                updated${type}
+            );
+
+            return Ok(updated);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                "{@methodName} - Error Message: {@message} - InnerException: {@innerEx} "
+                    + "- Stacktrace: {@ex}",
+                nameof(Update),
+                ex.Message,
+                ex.InnerException,
+                ex.StackTrace
+            );
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+        }
+    }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public IActionResult BulkUpdate(
+        [FromBody] IEnumerable<${type}> updated${type}s
+    )
+    {
+        try
+        {
+            IEnumerable<${type}> updated =
+                 _${camelType}Service.BulkUpdate(updated${type}s);
+
+            if (updated is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(updated);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                "{@methodName} - Error Message: {@message} - InnerException: {@innerEx} "
+                    + "- Stacktrace: {@ex}",
+                nameof(BulkUpdate),
+                ex.Message,
+                ex.InnerException,
+                ex.StackTrace
+            );
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+        }
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public IActionResult Delete([FromRoute] string id)
+    {
+        try
+        {
+            bool exists = _${camelType}Service.Exists(id);
+
+            if (!exists)
+            {
+                return NotFound();
+            }
+
+            _${camelType}Service.Delete(id);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                "{@methodName} - Error Message: {@message} - InnerException: {@innerEx} "
+                    + "- Stacktrace: {@ex}",
+                nameof(Delete),
+                ex.Message,
+                ex.InnerException,
+                ex.StackTrace
+            );
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+        }
     }
 }
