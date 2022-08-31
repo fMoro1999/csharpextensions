@@ -179,7 +179,7 @@ export class Extension {
       .set('enum', new CSharpTemplate('Enum', 'createEnum'))
       .set(
         'apicontroller',
-        new CSharpTemplate('ApiController', 'createApiController', [
+        new CSharpTemplate('ApiController', 'createHttpController', [
           'Microsoft.AspNetCore.Mvc',
           'Microsoft.Extensions.Logging',
           'Microsoft.AspNetCore.Http',

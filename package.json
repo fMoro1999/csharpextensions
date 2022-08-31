@@ -30,7 +30,7 @@
     "onCommand:csharpextensions.createClass",
     "onCommand:csharpextensions.createEnum",
     "onCommand:csharpextensions.createInterface",
-    "onCommand:csharpextensions.createApiController"
+    "onCommand:csharpextensions.createHttpController"
   ],
   "main": "./dist/extension",
   "contributes": {
@@ -54,7 +54,7 @@
         "title": "Enum"
       },
       {
-        "command": "csharpextensions.createApiController",
+        "command": "csharpextensions.createHttpController",
         "title": "HTTP Controller"
       },
       {
@@ -78,7 +78,7 @@
         },
         {
           "group": "10_mvc@1",
-          "command": "csharpextensions.createApiController"
+          "command": "csharpextensions.createHttpController"
         },
         {
           "group": "30_test@0",
