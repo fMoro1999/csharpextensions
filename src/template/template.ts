@@ -96,13 +96,13 @@ export default abstract class Template {
     let cursorPosition: vscode.Position | null;
 
     try {
-      const namespace = await this.getNamespace(filePath);
-
       text =
         await fileScopedNamespaceConverter.getFileScopedNamespaceFormOfTemplateIfNecessary(
           text,
           filePath
         );
+
+      const namespace = await this.getNamespace(filePath);
 
       text = text
         .replace(Template.NamespaceRegex, namespace)
@@ -115,7 +115,7 @@ export default abstract class Template {
       if (isHttpController) {
         const modelType = this.getTypeFromFilename(filename);
         const camelModelType = camelize(modelType);
-        
+
         text = text.replace(Template.TypeRegex, modelType);
         text = text.replace(Template.CamelTypeRegex, camelModelType);
       }
@@ -162,7 +162,7 @@ export default abstract class Template {
    *
    * @private
    * @param {string} filename
-   * @return {*} 
+   * @return {*}
    * @memberof Template
    */
   private getTypeFromFilename(filename: string) {

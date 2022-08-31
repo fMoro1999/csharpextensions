@@ -1,0 +1,17 @@
+${namespaces}
+
+namespace ${namespace};
+
+[ApiController]
+[Route("api/[controller]")]
+public class ${classname} : ControllerBase
+{
+    private readonly ILogger<${classname}> _logger;
+
+    public ${classname}(
+      ILogger<${classname}> logger
+    )
+    {
+      _logger = logger;
+    }
+}
