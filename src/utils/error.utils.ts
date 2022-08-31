@@ -27,7 +27,7 @@ export function showAndLogErrorMessage(
 }
 
 export class ExtensionError extends Error {
-  protected _internalError: Error | unknown | undefined;
+  protected internalError: Error | unknown | undefined;
 
   constructor(
     message: string,
@@ -35,10 +35,10 @@ export class ExtensionError extends Error {
   ) {
     super(message);
 
-    this._internalError = internalError;
+    this.internalError = internalError;
   }
 
   public getInternalError(): Error | unknown | undefined {
-    return this._internalError;
+    return this.internalError;
   }
 }

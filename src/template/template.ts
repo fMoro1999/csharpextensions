@@ -5,9 +5,9 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { sortBy, uniq } from 'lodash';
 
-import { ExtensionError } from '../util';
 import NamespaceDetector from '../namespaceDetector';
 import fileScopedNamespaceConverter from '../fileScopedNamespaceConverter';
+import { ExtensionError } from '../utils';
 
 export default abstract class Template {
   private static readonly ClassnameRegex = new RegExp(/\${classname}/, 'g');
@@ -16,12 +16,12 @@ export default abstract class Template {
 
   private _name: string;
   private _command: string;
-  private _requiredUsings: string[];
+  private requiredUsings: string[];
 
   constructor(name: string, command: string, requiredUsings: string[] = []) {
     this._name = name;
     this._command = command;
-    this._requiredUsings = requiredUsings;
+    this.requiredUsings = requiredUsings;
   }
 
   public getName(): string {
@@ -157,7 +157,7 @@ export default abstract class Template {
     const includeNamespaces = vscode.workspace
       .getConfiguration()
       .get('csharpextensions.includeNamespaces', true);
-    let usings = this._requiredUsings;
+    let usings = this.requiredUsings;
 
     if (includeNamespaces) usings = usings.concat(this.getOptionalUsings());
 
