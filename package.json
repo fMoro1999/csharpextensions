@@ -37,7 +37,7 @@
     "submenus": [
       {
         "id": "csharpextensions.new",
-        "label": "New C#"
+        "label": "C#"
       }
     ],
     "commands": [
@@ -55,7 +55,7 @@
       },
       {
         "command": "csharpextensions.createApiController",
-        "title": "Api Controller"
+        "title": "REST API Controller"
       },
       {
         "command": "csharpextensions.createXUnitTest",
