@@ -1,11 +1,10 @@
-${namespaces}namespace ${namespace}
+${namespaces}namespace ${namespace};
+
+public class ${classname}
 {
-    public class ${classname}
+    [Fact]
+    public void Test1()
     {
-        [Fact]
-        public void Test1()
-        {
-            Assert.True(true);${cursor}
-        }
+        Assert.True(true);${cursor}
     }
 }
