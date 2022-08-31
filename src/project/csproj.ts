@@ -1,13 +1,13 @@
 export interface Csproj {
-    Project: Project | undefined
+  Project: Project | undefined;
 }
 
 export interface Project {
-    PropertyGroup: Array<PropertyGroup>
+  PropertyGroup: Array<PropertyGroup>;
 }
 
 export interface PropertyGroup {
-    RootNamespace: Array<string> | undefined
-    TargetFramework: Array<string> | undefined
-    ImplicitUsings: Array<string> | undefined
+  RootNamespace: Array<string> | undefined;
+  TargetFramework: Array<string> | undefined;
+  ImplicitUsings: Array<string> | undefined;
 }
