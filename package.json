@@ -30,12 +30,7 @@
     "onCommand:csharpextensions.createClass",
     "onCommand:csharpextensions.createEnum",
     "onCommand:csharpextensions.createInterface",
-    "onCommand:csharpextensions.createApiController",
-    "onCommand:csharpextensions.createRazorPage",
-    "onCommand:csharpextensions.createUwpPage",
-    "onCommand:csharpextensions.createUwpWindow",
-    "onCommand:csharpextensions.createUwpUserControl",
-    "onCommand:csharpextensions.createUwpResourceFile"
+    "onCommand:csharpextensions.createApiController"
   ],
   "main": "./dist/extension",
   "contributes": {
@@ -59,44 +54,12 @@
         "title": "Enum"
       },
       {
-        "command": "csharpextensions.createStruct",
-        "title": "Struct"
-      },
-      {
         "command": "csharpextensions.createApiController",
         "title": "Api Controller"
       },
       {
-        "command": "csharpextensions.createRazorPage",
-        "title": "Razor Page"
-      },
-      {
-        "command": "csharpextensions.createUwpPage",
-        "title": "UWP Page"
-      },
-      {
-        "command": "csharpextensions.createUwpWindow",
-        "title": "UWP Window"
-      },
-      {
-        "command": "csharpextensions.createUwpUserControl",
-        "title": "UWP UserControl"
-      },
-      {
-        "command": "csharpextensions.createUwpResourceFile",
-        "title": "UWP Resource File"
-      },
-      {
         "command": "csharpextensions.createXUnitTest",
         "title": "XUnit Test"
-      },
-      {
-        "command": "csharpextensions.createNUnitTest",
-        "title": "NUnit Test"
-      },
-      {
-        "command": "csharpextensions.createMSTest",
-        "title": "MSTest"
       }
     ],
     "menus": {
@@ -114,44 +77,12 @@
           "command": "csharpextensions.createEnum"
         },
         {
-          "group": "00_basics@3",
-          "command": "csharpextensions.createStruct"
-        },
-        {
           "group": "10_mvc@1",
           "command": "csharpextensions.createApiController"
         },
         {
-          "group": "10_mvc@2",
-          "command": "csharpextensions.createRazorPage"
-        },
-        {
-          "group": "20_uwp@0",
-          "command": "csharpextensions.createUwpPage"
-        },
-        {
-          "group": "20_uwp@1",
-          "command": "csharpextensions.createUwpWindow"
-        },
-        {
-          "group": "20_uwp@2",
-          "command": "csharpextensions.createUwpUserControl"
-        },
-        {
-          "group": "20_uwp@3",
-          "command": "csharpextensions.createUwpResourceFile"
-        },
-        {
           "group": "30_test@0",
           "command": "csharpextensions.createXUnitTest"
-        },
-        {
-          "group": "30_test@1",
-          "command": "csharpextensions.createNUnitTest"
-        },
-        {
-          "group": "30_test@2",
-          "command": "csharpextensions.createMSTest"
         }
       ],
       "explorer/context": [
