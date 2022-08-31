@@ -1,6 +1,6 @@
 import Template from './template';
 
-export default class CsTemplate extends Template {
+export default class CSharpTemplate extends Template {
   constructor(name: string, command: string, requiredUsings: string[] = []) {
     super(name, command, requiredUsings);
   }
@@ -27,8 +27,12 @@ export default class CsTemplate extends Template {
       templatesPath,
       this._getFileName()
     );
-    const filePath = `${pathWithoutExtension}.cs`;
+    const filePath = this.buildPath(pathWithoutExtension);
 
-    await this._createFile(templatePath, filePath, filename);
+    await this.createFile(templatePath, filePath, filename);
+  }
+
+  private buildPath(pathWithoutExtension: string) {
+    return `${pathWithoutExtension}.cs`;
   }
 }

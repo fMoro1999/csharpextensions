@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import CodeActionProvider from './codeActionProvider';
 import { RegisterCommandCallbackArgument } from './models';
-import CsTemplate from './template/csTemplate';
+import CSharpTemplate from './template/csharpTemplate';
 import Template from './template/template';
 import { showAndLogErrorMessage } from './utils';
 
@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext): void {
   knownTemplates.forEach((template) => {
     context.subscriptions.push(
       vscode.commands.registerCommand(
-        template.getCommand(),
+        template.command,
         async (options: RegisterCommandCallbackArgument) =>
           await extension.createFromTemplate(options, template)
       )
@@ -89,7 +89,7 @@ export class Extension {
     let newFilename = await vscode.window.showInputBox({
       ignoreFocusOut: true,
       prompt: 'Please enter a name for the new file(s)',
-      value: `New${template.getName()}`,
+      value: `${template.name}`,
     });
 
     if (!newFilename) {
@@ -121,7 +121,9 @@ export class Extension {
     try {
       await template.create(templatesPath, pathWithoutExtension, newFilename);
     } catch (errCreating) {
-      const message = `Error trying to create new ${template.getName()} at ${pathWithoutExtension}`;
+      const message =
+        `Error trying to create new ${template.name}` +
+        ` at ${pathWithoutExtension}`;
 
       showAndLogErrorMessage(message, errCreating);
     }
@@ -129,8 +131,7 @@ export class Extension {
 
   private static templatesPath = 'templates';
   private static knownTemplates: Map<string, Template>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static currentVscodeExtension: vscode.Extension<any> | undefined =
+  private static currentVscodeExtension: vscode.Extension<unknown> | undefined =
     undefined;
   private static instance: Extension;
   private static KnownExtensionNames = [
@@ -149,17 +150,18 @@ export class Extension {
   private static GetCurrentVscodeExtension():
     | vscode.Extension<unknown>
     | undefined {
-    if (!this.currentVscodeExtension) {
-      for (let i = 0; i < this.KnownExtensionNames.length; i++) {
-        const extension = vscode.extensions.getExtension(
-          this.KnownExtensionNames[i]
-        );
+    if (this.currentVscodeExtension) {
+      return this.currentVscodeExtension;
+    }
 
-        if (extension) {
-          this.currentVscodeExtension = extension;
+    for (let i = 0; i < this.KnownExtensionNames.length; i++) {
+      const extension = vscode.extensions.getExtension(
+        this.KnownExtensionNames[i]
+      );
 
-          break;
-        }
+      if (extension) {
+        this.currentVscodeExtension = extension;
+        break;
       }
     }
 
@@ -167,26 +169,22 @@ export class Extension {
   }
 
   static getknownTemplates(): Map<string, Template> {
-    if (!this.knownTemplates) {
-      this.knownTemplates = new Map();
-
-      this.knownTemplates.set('class', new CsTemplate('Class', 'createClass'));
-      this.knownTemplates.set(
-        'interface',
-        new CsTemplate('Interface', 'createInterface')
-      );
-      this.knownTemplates.set('enum', new CsTemplate('Enum', 'createEnum'));
-      this.knownTemplates.set(
-        'apicontroller',
-        new CsTemplate('ApiController', 'createApiController', [
-          'Microsoft.AspNetCore.Mvc',
-        ])
-      );
-      this.knownTemplates.set(
-        'xunit',
-        new CsTemplate('XUnit', 'createXUnitTest', ['XUnit'])
-      );
+    if (this.knownTemplates) {
+      return this.knownTemplates;
     }
+
+    this.knownTemplates = new Map()
+      .set('class', new CSharpTemplate('Class', 'createClass'))
+      .set('interface', new CSharpTemplate('Interface', 'createInterface'))
+      .set('enum', new CSharpTemplate('Enum', 'createEnum'))
+      .set(
+        'apicontroller',
+        new CSharpTemplate('ApiController', 'createApiController', [
+          'Microsoft.AspNetCore.Mvc',
+          'Microsoft.Extensions.Logging',
+        ])
+      )
+      .set('xunit', new CSharpTemplate('XUnit', 'createXUnitTest', ['XUnit']));
 
     return this.knownTemplates;
   }
