@@ -1,14 +1,14 @@
 import * as vscode from 'vscode';
 
-import * as path from 'path';
 import { EOL } from 'os';
+import * as path from 'path';
 
-import Template from './template/template';
-import CsTemplate from './template/csTemplate';
-import CshtmlTemplate from './template/cshtmlTemplate';
-import ReswTemplate from './template/reswTemplate';
-import XamlTemplate from './template/xamlTemplate';
 import CodeActionProvider from './codeActionProvider';
+import CshtmlTemplate from './template/cshtmlTemplate';
+import CsTemplate from './template/csTemplate';
+import ReswTemplate from './template/reswTemplate';
+import Template from './template/template';
+import XamlTemplate from './template/xamlTemplate';
 import { showAndLogErrorMessage } from './util';
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -142,10 +142,8 @@ export class Extension {
     return this.Instance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static GetCurrentVscodeExtension():
-    | vscode.Extension<any>
-    | undefined {
+  vscode.Extension<unknown> | undefined {
     if (!this.CurrentVscodeExtension) {
       for (let i = 0; i < this.KnownExtensionNames.length; i++) {
         const extension = vscode.extensions.getExtension(
