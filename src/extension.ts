@@ -21,8 +21,9 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   const extension = Extension.getInstance();
+  const knownTemplates = Extension.getknownTemplates();
 
-  Extension.knownTemplates.forEach((template) => {
+  knownTemplates.forEach((template) => {
     context.subscriptions.push(
       vscode.commands.registerCommand(
         template.getCommand(),
@@ -91,14 +92,15 @@ export class Extension {
       value: `New${template.getName()}`,
     });
 
-    if (typeof newFilename === 'undefined' || newFilename === '') {
+    if (!newFilename) {
       console.info('Filename request: User did not provide any input');
 
       return;
     }
 
-    if (newFilename.endsWith('.cs'))
+    if (newFilename.endsWith('.cs')) {
       newFilename = newFilename.substring(0, newFilename.length - 3);
+    }
 
     const pathWithoutExtension = `${incomingPath}${path.sep}${newFilename}`;
     const existingFiles = await template.getExistingFiles(pathWithoutExtension);
@@ -113,7 +115,7 @@ export class Extension {
 
     const templatesPath = path.join(
       extension.extensionPath,
-      Extension.TemplatesPath
+      Extension.templatesPath
     );
 
     try {
@@ -125,10 +127,10 @@ export class Extension {
     }
   }
 
-  private static TemplatesPath = 'templates';
-  private static KnownTemplates: Map<string, Template>;
+  private static templatesPath = 'templates';
+  private static knownTemplates: Map<string, Template>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static CurrentVscodeExtension: vscode.Extension<any> | undefined =
+  private static currentVscodeExtension: vscode.Extension<any> | undefined =
     undefined;
   private static instance: Extension;
   private static KnownExtensionNames = [
@@ -147,45 +149,45 @@ export class Extension {
   private static GetCurrentVscodeExtension():
     | vscode.Extension<unknown>
     | undefined {
-    if (!this.CurrentVscodeExtension) {
+    if (!this.currentVscodeExtension) {
       for (let i = 0; i < this.KnownExtensionNames.length; i++) {
         const extension = vscode.extensions.getExtension(
           this.KnownExtensionNames[i]
         );
 
         if (extension) {
-          this.CurrentVscodeExtension = extension;
+          this.currentVscodeExtension = extension;
 
           break;
         }
       }
     }
 
-    return this.CurrentVscodeExtension;
+    return this.currentVscodeExtension;
   }
 
-  static get knownTemplates(): Map<string, Template> {
-    if (!this.KnownTemplates) {
-      this.KnownTemplates = new Map();
+  static getknownTemplates(): Map<string, Template> {
+    if (!this.knownTemplates) {
+      this.knownTemplates = new Map();
 
-      this.KnownTemplates.set('class', new CsTemplate('Class', 'createClass'));
-      this.KnownTemplates.set(
+      this.knownTemplates.set('class', new CsTemplate('Class', 'createClass'));
+      this.knownTemplates.set(
         'interface',
         new CsTemplate('Interface', 'createInterface')
       );
-      this.KnownTemplates.set('enum', new CsTemplate('Enum', 'createEnum'));
-      this.KnownTemplates.set(
+      this.knownTemplates.set('enum', new CsTemplate('Enum', 'createEnum'));
+      this.knownTemplates.set(
         'apicontroller',
         new CsTemplate('ApiController', 'createApiController', [
           'Microsoft.AspNetCore.Mvc',
         ])
       );
-      this.KnownTemplates.set(
+      this.knownTemplates.set(
         'xunit',
         new CsTemplate('XUnit', 'createXUnitTest', ['XUnit'])
       );
     }
 
-    return this.KnownTemplates;
+    return this.knownTemplates;
   }
 }
