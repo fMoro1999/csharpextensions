@@ -7,12 +7,15 @@ import * as path from 'path';
 
 import fileScopedNamespaceConverter from '../fileScopedNamespaceConverter';
 import NamespaceDetector from '../namespaceDetector';
-import { ExtensionError } from '../utils';
+import { camelize, ExtensionError } from '../utils';
 
 export default abstract class Template {
   private static readonly ClassnameRegex = new RegExp(/\${classname}/, 'g');
   private static readonly NamespaceRegex = new RegExp(/\${namespace}/, 'g');
-  private static readonly EolRegex = new RegExp(/\r?\n/g);
+  private static readonly EolRegex = new RegExp(/\r?\n/, 'g');
+  private static readonly NamespacesRegex = new RegExp(/\${namespaces}/, 'g');
+  private static readonly TypeRegex = new RegExp(/\${type}/, 'g');
+  private static readonly CamelTypeRegex = new RegExp(/\${camelType}/, 'g');
 
   name: string;
   private _command: string;
@@ -47,7 +50,7 @@ export default abstract class Template {
     return existingFiles;
   }
 
-  protected _getFileName(): string {
+  protected get fileName(): string {
     // Template file names are always in lowercase, but names can have uppercase characters
     return this.name.toLowerCase();
   }
@@ -58,7 +61,7 @@ export default abstract class Template {
     return await namespaceDetector.getNamespace();
   }
 
-  private _getEolSetting(): string {
+  private getEolSetting(): string {
     const eolSetting = vscode.workspace
       .getConfiguration()
       .get('files.eol', EOL);
@@ -104,10 +107,19 @@ export default abstract class Template {
       text = text
         .replace(Template.NamespaceRegex, namespace)
         .replace(Template.ClassnameRegex, filename)
-        .replace('${namespaces}', this.usings)
-        .replace(Template.EolRegex, this._getEolSetting());
+        .replace(Template.NamespacesRegex, this.usings)
+        .replace(Template.EolRegex, this.getEolSetting());
 
-      cursorPosition = this._findCursorInTemplate(text);
+      const isHttpController = this.isHttpController(filename);
+
+      if (isHttpController) {
+        const modelType = filename.replace('Controller', '');
+        const camelModelType = camelize(modelType);
+        text = text.replace(Template.TypeRegex, modelType);
+        text = text.replace(Template.CamelTypeRegex, camelModelType);
+      }
+
+      cursorPosition = this.findCursorInTemplate(text);
 
       text = text.replace('${cursor}', '');
     } catch (errBuildingText) {
@@ -143,7 +155,7 @@ export default abstract class Template {
     }
   }
 
-  protected _getTemplatePath(
+  protected getTemplatePath(
     templatesPath: string,
     templateName: string
   ): string {
@@ -175,7 +187,7 @@ export default abstract class Template {
     filename: string
   ): Promise<void>;
 
-  private _findCursorInTemplate(text: string): vscode.Position | null {
+  private findCursorInTemplate(text: string): vscode.Position | null {
     const cursorPos = text.indexOf('${cursor}');
     const preCursor = text.substr(0, cursorPos);
     const matchesForPreCursor = preCursor.match(/\n/gi);
@@ -186,5 +198,9 @@ export default abstract class Template {
     const charNum = preCursor.substr(preCursor.lastIndexOf('\n')).length;
 
     return new vscode.Position(lineNum, charNum);
+  }
+
+  private isHttpController(filename: string): boolean {
+    return filename.toLowerCase().includes('controller');
   }
 }

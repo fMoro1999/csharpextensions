@@ -23,9 +23,9 @@ export default class CSharpTemplate extends Template {
     pathWithoutExtension: string,
     filename: string
   ): Promise<void> {
-    const templatePath = this._getTemplatePath(
+    const templatePath = this.getTemplatePath(
       templatesPath,
-      this._getFileName()
+      this.fileName
     );
     const filePath = this.buildPath(pathWithoutExtension);
 
