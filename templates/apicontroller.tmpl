@@ -1,8 +1,16 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
 ${namespaces}namespace ${namespace};
 
 [ApiController]
 [Route("api/[controller]")]
 public class ${classname} : ControllerBase
 {
-    ${cursor}
+    private readonly ILogger<${classname}> _logger;
+
+    public ${classname}(ILogger<${classname}> logger)
+    {
+        _logger = logger;
+    }
 }
