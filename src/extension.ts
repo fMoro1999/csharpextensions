@@ -182,6 +182,9 @@ export class Extension {
         new CSharpTemplate('ApiController', 'createApiController', [
           'Microsoft.AspNetCore.Mvc',
           'Microsoft.Extensions.Logging',
+          'Microsoft.AspNetCore.Http',
+          'System',
+          'System.Collections.Generic'
         ])
       )
       .set('xunit', new CSharpTemplate('XUnit', 'createXUnitTest', ['XUnit']));
