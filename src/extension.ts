@@ -12,7 +12,7 @@ import XamlTemplate from './template/xamlTemplate';
 import { showAndLogErrorMessage } from './util';
 
 export function activate(context: vscode.ExtensionContext): void {
-  const extension = Extension.instance;
+  const extension = Extension.getInstance();
 
   Extension.GetKnownTemplates().forEach((template) => {
     context.subscriptions.push(
@@ -128,18 +128,18 @@ export class Extension {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static CurrentVscodeExtension: vscode.Extension<any> | undefined =
     undefined;
-  private static _instance: Extension;
+  private static instance: Extension;
   private static KnownExtensionNames = [
     'kreativ-software.csharpextensions',
     'jsw.csharpextensions',
   ];
 
-  public static get instance(): Extension {
+  public static getInstance(): Extension {
     if (!this.instance) {
-      this._instance = new Extension();
+      this.instance = new Extension();
     }
 
-    return this._instance;
+    return this.instance;
   }
 
   private static GetCurrentVscodeExtension():
