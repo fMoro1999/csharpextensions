@@ -113,8 +113,9 @@ export default abstract class Template {
       const isHttpController = this.isHttpController(filename);
 
       if (isHttpController) {
-        const modelType = filename.replace('Controller', '');
+        const modelType = this.getTypeFromFilename(filename);
         const camelModelType = camelize(modelType);
+        
         text = text.replace(Template.TypeRegex, modelType);
         text = text.replace(Template.CamelTypeRegex, camelModelType);
       }
@@ -153,6 +154,21 @@ export default abstract class Template {
         errOpeningFile
       );
     }
+  }
+
+  /**
+   * ItemController -> Item
+   * ItemsController -> Item
+   *
+   * @private
+   * @param {string} filename
+   * @return {*} 
+   * @memberof Template
+   */
+  private getTypeFromFilename(filename: string) {
+    return filename.includes('sController')
+      ? filename.replace('sController', '')
+      : filename.replace('Controller', '');
   }
 
   protected getTemplatePath(
