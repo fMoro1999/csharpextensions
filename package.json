@@ -55,7 +55,7 @@
       },
       {
         "command": "csharpextensions.createApiController",
-        "title": "REST API Controller"
+        "title": "HTTP Controller"
       },
       {
         "command": "csharpextensions.createXUnitTest",
