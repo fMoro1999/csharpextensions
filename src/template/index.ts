@@ -1,2 +1,2 @@
 export * from './csharpTemplate';
-export * from './template';
+export * as regexs from './template';

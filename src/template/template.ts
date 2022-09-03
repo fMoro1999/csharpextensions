@@ -7,16 +7,9 @@ import * as path from 'path';
 
 import fileScopedNamespaceConverter from '../fileScopedNamespaceConverter';
 import NamespaceDetector from '../namespaceDetector';
-import { camelize, ExtensionError } from '../utils';
+import { camelize, ExtensionError, Regexes } from '../utils';
 
 export default abstract class Template {
-  private static readonly ClassnameRegex = new RegExp(/\${classname}/, 'g');
-  private static readonly NamespaceRegex = new RegExp(/\${namespace}/, 'g');
-  private static readonly EolRegex = new RegExp(/\r?\n/, 'g');
-  private static readonly NamespacesRegex = new RegExp(/\${namespaces}/, 'g');
-  private static readonly TypeRegex = new RegExp(/\${type}/, 'g');
-  private static readonly CamelTypeRegex = new RegExp(/\${camelType}/, 'g');
-
   name: string;
   private _command: string;
   private requiredUsings: string[];
@@ -102,27 +95,21 @@ export default abstract class Template {
           filePath
         );
 
-      const namespace = await this.getNamespace(filePath);
-
-      text = text
-        .replace(Template.NamespaceRegex, namespace)
-        .replace(Template.ClassnameRegex, filename)
-        .replace(Template.NamespacesRegex, this.usings)
-        .replace(Template.EolRegex, this.getEolSetting());
-
-      const isHttpController = this.isHttpController(filename);
-
-      if (isHttpController) {
-        const modelType = this.getTypeFromFilename(filename);
-        const camelModelType = camelize(modelType);
-
-        text = text.replace(Template.TypeRegex, modelType);
-        text = text.replace(Template.CamelTypeRegex, camelModelType);
-      }
-
+      const namespace: string = await this.getNamespace(filePath);
+      const modelType: string = this.getTypeFromFilename(filename);
+      const camelModelType: string = camelize(modelType);
+      const eolSetting: string = this.getEolSetting();
       cursorPosition = this.findCursorInTemplate(text);
 
-      text = text.replace('${cursor}', '');
+      text = text
+        .replace(Regexes.NAMESPACE_REGEX, namespace)
+        .replace(Regexes.CLASS_NAME_REGEX, filename)
+        .replace(Regexes.NAMESPACES_REGEX, this.usings)
+        .replace(Regexes.TYPE_REGEX, modelType)
+        .replace(Regexes.CAMELCASE_TYPE_REGEX, camelModelType)
+        .replace('${cursor}', '')
+        .replace(Regexes.EOL_REGEX, eolSetting);
+        
     } catch (errBuildingText) {
       throw new ExtensionError('Error trying to build text', errBuildingText);
     }
@@ -214,9 +201,5 @@ export default abstract class Template {
     const charNum = preCursor.substr(preCursor.lastIndexOf('\n')).length;
 
     return new vscode.Position(lineNum, charNum);
-  }
-
-  private isHttpController(filename: string): boolean {
-    return filename.toLowerCase().includes('controller');
   }
 }
