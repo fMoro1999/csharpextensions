@@ -120,11 +120,6 @@
           "type": "boolean",
           "default": false,
           "description": "Use file scoped namespace in .NET 6.0+ projects"
-        },
-        "csharpextensions.newClassesAsSealed": {
-          "type": "boolean",
-          "default": true,
-          "description": "If true, new generated classes will be sealed"
         }
       }
     }
