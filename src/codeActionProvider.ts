@@ -342,10 +342,10 @@ export default class CodeActionProvider implements VSCodeCodeActionProvider {
     const tabSize = workspace.getConfiguration().get('editor.tabSize', 4);
     const privateMemberPrefix = workspace
       .getConfiguration()
-      .get('csharpextensions.privateMemberPrefix', '');
+      .get('csharpextensions.privateMemberPrefix', '_');
     const prefixWithThis = workspace
       .getConfiguration()
-      .get('csharpextensions.useThisForCtorAssignments', true);
+      .get('csharpextensions.useThisForCtorAssignments', false);
 
     let memberGeneration: MemberGenerationProperties;
     let title: string;
