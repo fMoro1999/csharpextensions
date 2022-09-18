@@ -2,7 +2,7 @@ ${namespaces}namespace ${namespace}
 {
 	[ApiController]
     [Route("api/[controller]")]
-    public class ${classname} : ControllerBase
+    public sealed class ${classname} : ControllerBase
     {
         private readonly ILogger<${classname}> _logger;
 
