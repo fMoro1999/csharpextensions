@@ -168,6 +168,13 @@ export class Extension {
     return this.currentVscodeExtension;
   }
 
+  /**
+   * The key will be the template filename
+   *
+   * @static
+   * @return {*}  {Map<string, Template>}
+   * @memberof Extension
+   */
   static getknownTemplates(): Map<string, Template> {
     if (this.knownTemplates) {
       return this.knownTemplates;
@@ -178,13 +185,21 @@ export class Extension {
       .set('interface', new CSharpTemplate('Interface', 'createInterface'))
       .set('enum', new CSharpTemplate('Enum', 'createEnum'))
       .set(
-        'apicontroller',
-        new CSharpTemplate('ApiController', 'createRestController', [
+        'restcontroller',
+        new CSharpTemplate('RestController', 'createRestController', [
           'Microsoft.AspNetCore.Mvc',
           'Microsoft.Extensions.Logging',
           'Microsoft.AspNetCore.Http',
           'System',
-          'System.Collections.Generic'
+          'System.Collections.Generic',
+        ])
+      )
+      .set(
+        'basicrestcontroller',
+        new CSharpTemplate('BasicRestController', 'createBasicRestController', [
+          'Microsoft.AspNetCore.Mvc',
+          'Microsoft.Extensions.Logging',
+          'Microsoft.AspNetCore.Http',
         ])
       )
       .set('xunit', new CSharpTemplate('XUnit', 'createXUnitTest', ['XUnit']));

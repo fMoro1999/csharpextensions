@@ -30,7 +30,8 @@
     "onCommand:csharpextensions.createClass",
     "onCommand:csharpextensions.createEnum",
     "onCommand:csharpextensions.createInterface",
-    "onCommand:csharpextensions.createRestController"
+    "onCommand:csharpextensions.createRestController",
+    "onCommand:csharpextensions.createBasicRestController"
   ],
   "main": "./dist/extension",
   "contributes": {
@@ -58,6 +59,10 @@
         "title": "Rest Controller"
       },
       {
+        "command": "csharpextensions.createBasicRestController",
+        "title": "Basic Rest Controller"
+      },
+      {
         "command": "csharpextensions.createXUnitTest",
         "title": "XUnit Test"
       }
@@ -79,6 +84,10 @@
         {
           "group": "10_mvc@1",
           "command": "csharpextensions.createRestController"
+        },
+        {
+          "group": "10_mvc@1",
+          "command": "csharpextensions.createBasicRestController"
         },
         {
           "group": "30_test@0",
