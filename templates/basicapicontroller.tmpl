@@ -1,15 +1,16 @@
-${namespaces}namespace ${namespace};
-
-[ApiController]
-[Route("api/[controller]")]
-public class ${classname} : ControllerBase
+${namespaces}namespace ${namespace}
 {
-    private readonly ILogger<${classname}> _logger;
-
-    public ${classname}(
-      ILogger<${classname}> logger
-    )
+	[ApiController]
+    [Route("api/[controller]")]
+    public class ${classname} : ControllerBase
     {
-      _logger = logger;
+        private readonly ILogger<${classname}> _logger;
+
+        public ${classname}(
+            ILogger<${classname}> logger
+        )
+        {
+            _logger = logger;
+        }
     }
 }
