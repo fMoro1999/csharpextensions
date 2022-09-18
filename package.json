@@ -30,7 +30,7 @@
     "onCommand:csharpextensions.createClass",
     "onCommand:csharpextensions.createEnum",
     "onCommand:csharpextensions.createInterface",
-    "onCommand:csharpextensions.createHttpController"
+    "onCommand:csharpextensions.createRestController"
   ],
   "main": "./dist/extension",
   "contributes": {
@@ -54,8 +54,8 @@
         "title": "Enum"
       },
       {
-        "command": "csharpextensions.createHttpController",
-        "title": "HTTP Controller"
+        "command": "csharpextensions.createRestController",
+        "title": "Rest Controller"
       },
       {
         "command": "csharpextensions.createXUnitTest",
@@ -78,7 +78,7 @@
         },
         {
           "group": "10_mvc@1",
-          "command": "csharpextensions.createHttpController"
+          "command": "csharpextensions.createRestController"
         },
         {
           "group": "30_test@0",
@@ -98,7 +98,7 @@
       "properties": {
         "csharpextensions.privateMemberPrefix": {
           "type": "string",
-          "default": "",
+          "default": "_",
           "description": "Prefix for generated private member declarations"
         },
         "csharpextensions.useThisForCtorAssignments": {
