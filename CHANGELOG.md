@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2022-09-19
+
+### Fixed
+
+- Moved to more minimal extension
+
 ## [1.7.1] - 2022-08-09
 
 ### Fixed

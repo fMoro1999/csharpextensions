@@ -2,16 +2,16 @@
   "name": "csharpextensions",
   "displayName": "C# Extensions",
   "description": "C# IDE Extensions for VSCode",
-  "author": "KreativJos",
+  "author": "fMoro",
   "license": "MIT",
-  "version": "1.7.1",
-  "publisher": "kreativ-software",
+  "version": "2.0.0",
+  "publisher": "fMoro1999",
   "engines": {
     "vscode": "^1.56.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kreativjos/csharpextensions"
+    "url": "https://github.com/fMoro1999/csharpextensions"
   },
   "icon": "logo.png",
   "categories": [
