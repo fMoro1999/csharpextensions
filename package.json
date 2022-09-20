@@ -1,10 +1,10 @@
 {
   "name": "csharpextensions",
-  "displayName": "C# Extensions",
-  "description": "C# IDE Extensions for VSCode",
+  "displayName": "C# Extensions -",
+  "description": "Minimal C# IDE Extensions for VSCode",
   "author": "fMoro",
   "license": "MIT",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publisher": "fMoro1999",
   "engines": {
     "vscode": "^1.56.0"
@@ -171,7 +171,7 @@
   },
   "__metadata": {
     "id": "80c8f9ff-3535-4b4a-b3db-e88f5752bb18",
-    "publisherDisplayName": "JosKreativ",
+    "publisherDisplayName": "fMoro1999",
     "publisherId": "4905789e-0ee4-4159-9429-069d1edbd4f4",
     "isPreReleaseVersion": false
   }
