@@ -4,7 +4,7 @@
   "description": "Minimal C# IDE Extensions for VSCode",
   "author": "fMoro",
   "license": "MIT",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "publisher": "fMoro1999",
   "engines": {
     "vscode": "^1.56.0"
@@ -157,7 +157,6 @@
     "glob": "^7.1.6",
     "mocha": "^8.2.1",
     "ts-loader": "^9.2.6",
-    "tsc": "^2.0.4",
     "typescript": "^4.6.3",
     "vsce": "^2.6.3",
     "vscode-test": "^1.5.0",

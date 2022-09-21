@@ -2,11 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.2] - 2022-09-21
+
+### Added
+
+- Global dependencies installation script
+- Updated build script
+
 ## [2.0.1] - 2022-09-19
 
 ### Fixed
 
 - Updated extension metadata
+
 ## [2.0.0] - 2022-09-19
 
 ### Fixed
